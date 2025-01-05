@@ -6,17 +6,13 @@ import AppBar from './components/AppBar';
 import SignIn from './components/SignIn';
 
 const Main = () => {
-  const onSubmit = (values) => {
-    console.log(values);
-  };
-
   return (
     <View style={styles.container}>
       <AppBar />
       <Routes>
         <Route path='/' element={<RepositoryList />} />
         <Route path='*' element={<Navigate to="/" replace />} />
-        <Route path='/signin' element={<SignIn onSubmit={onSubmit} />} />
+        <Route path='/signin' element={<SignIn />} />
       </Routes>
     </View>
   );

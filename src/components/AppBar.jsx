@@ -45,7 +45,7 @@ const AppBar = () => {
       <ScrollView horizontal contentContainerStyle={styles.buttons}>
         <AppBarTab text="Repositories" to="/" />
         {user ? (
-          <TouchableOpacity onPress={signOut}>
+          <TouchableOpacity onPress={() => signOut()}>
             <Text style={styles.text}>Sign Out</Text>
           </TouchableOpacity>
         ) : (

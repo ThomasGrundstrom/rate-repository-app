@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { StyleSheet, Pressable, ScrollView, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { useApolloClient } from '@apollo/client';
@@ -9,7 +8,6 @@ import useAuthStorage from '../hooks/useAuthStorage';
 import theme from '../theme';
 
 const AppBar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user, loading, error } = useUserInformation();
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
@@ -17,16 +15,7 @@ const AppBar = () => {
   const signOut = async () => {
     await authStorage.removeAccessToken();
     await apolloClient.resetStore();
-    setIsLoggedIn(false);
   };
-
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true)
-    } else {
-      setIsLoggedIn(false)
-    }
-  }, [user])
 
   if (loading) {
     return (
@@ -55,7 +44,7 @@ const AppBar = () => {
     <Pressable style={styles.container}>
       <ScrollView horizontal contentContainerStyle={styles.buttons}>
         <AppBarTab text="Repositories" to="/" />
-        {isLoggedIn ? (
+        {user ? (
           <TouchableOpacity onPress={signOut}>
             <Text style={styles.text}>Sign Out</Text>
           </TouchableOpacity>

@@ -1,6 +1,42 @@
 import { View, StyleSheet, Image } from 'react-native';
+
 import Text from './Text';
 import theme from '../theme';
+
+const StatsItem = ({ text, count }) => {
+  let displayCount = count
+  if (displayCount > 1000) {
+    displayCount = (displayCount/1000).toFixed(1) + 'k'
+  }
+
+  return (
+    <View style={styles.statsItem}>
+      <Text fontWeight='bold'>{displayCount}</Text>
+      <Text>{text}</Text>
+    </View>
+  )
+}
+
+const RepositoryItem = ({ repository }) => {
+  return (
+    <View style={styles.container} testID='repositoryItem'>
+      <View style={styles.ind}>
+        <Image style={styles.image} source={{ uri: repository.ownerAvatarUrl }} />
+        <View style={styles.nameDescription}>
+          <Text fontWeight='bold'>{repository.fullName}</Text>
+          <Text>{repository.description}</Text>
+          <Text style={styles.language}>{repository.language}</Text>
+        </View>
+      </View>
+      <View style={styles.stats}>
+        <StatsItem text='Stars' count={repository.stargazersCount} />
+        <StatsItem text='Forks' count={repository.forksCount} />
+        <StatsItem text='Reviews' count={repository.reviewCount} />
+        <StatsItem text='Rating' count={repository.ratingAverage} />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -42,38 +78,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 })
-
-const StatsItem = ({ text, count }) => {
-  let displayCount = count
-  if (displayCount > 1000) {
-    displayCount = (displayCount/1000).toFixed(1) + 'k'
-  }
-
-  return (
-    <View style={styles.statsItem}>
-      <Text fontWeight='bold'>{displayCount}</Text>
-      <Text>{text}</Text>
-    </View>
-  )
-}
-
-const RepositoryItem = ({ repository }) => (
-  <View style={styles.container}>
-    <View style={styles.ind}>
-      <Image style={styles.image} source={{ uri: repository.ownerAvatarUrl }} />
-      <View style={styles.nameDescription}>
-        <Text fontWeight='bold'>{repository.fullName}</Text>
-        <Text>{repository.description}</Text>
-        <Text style={styles.language}>{repository.language}</Text>
-      </View>
-    </View>
-    <View style={styles.stats}>
-      <StatsItem text='Stars' count={repository.stargazersCount} />
-      <StatsItem text='Forks' count={repository.forksCount} />
-      <StatsItem text='Reviews' count={repository.reviewCount} />
-      <StatsItem text='Rating' count={repository.ratingAverage} />
-    </View>
-  </View>
-);
 
 export default RepositoryItem

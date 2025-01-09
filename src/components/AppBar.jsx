@@ -1,6 +1,7 @@
 import { StyleSheet, Pressable, ScrollView, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
 import { useApolloClient } from '@apollo/client';
+import { useNavigate } from 'react-router-native';
 
 import AppBarTab from './AppBarTab';
 import useUserInformation from '../hooks/useUserInformation';
@@ -11,8 +12,10 @@ const AppBar = () => {
   const { user, loading, error } = useUserInformation();
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
+  let navigate = useNavigate();
 
   const signOut = async () => {
+    navigate('/');
     await authStorage.removeAccessToken();
     await apolloClient.resetStore();
   };
@@ -45,11 +48,18 @@ const AppBar = () => {
       <ScrollView horizontal contentContainerStyle={styles.buttons}>
         <AppBarTab text="Repositories" to="/" />
         {user ? (
-          <TouchableOpacity onPress={() => signOut()}>
-            <Text style={styles.text}>Sign Out</Text>
-          </TouchableOpacity>
+          <>
+            <AppBarTab text="Create a review" to="createReview" />
+            <AppBarTab text="My reviews" to="myReviews" />
+            <TouchableOpacity onPress={() => signOut()}>
+              <Text style={styles.text}>Sign Out</Text>
+            </TouchableOpacity>
+          </>
         ) : (
-          <AppBarTab text="Sign In" to="signin" />
+          <>
+            <AppBarTab text="Sign In" to="signin" />
+            <AppBarTab text="Sign up" to="signup" />
+          </>
         )}
       </ScrollView>
     </Pressable>

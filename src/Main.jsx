@@ -4,6 +4,10 @@ import { Route, Routes, Navigate } from 'react-router-native';
 import RepositoryList from './components/RepositoryList';
 import AppBar from './components/AppBar';
 import SignIn from './components/SignIn';
+import RepositoryItemPage from './components/RepositoryItemPage';
+import CreateReview from './components/CreateReview';
+import SignUp from './components/SignUp';
+import MyReviews from './components/MyReviews';
 
 const Main = () => {
   return (
@@ -13,10 +17,14 @@ const Main = () => {
         <Route path='/' element={<RepositoryList />} />
         <Route path='*' element={<Navigate to="/" replace />} />
         <Route path='/signin' element={<SignIn />} />
+        <Route path='/:repositoryId' element={<RepositoryItemPage />} />
+        <Route path='/createReview' element={<CreateReview />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/myReviews' element={<MyReviews />} />
       </Routes>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
